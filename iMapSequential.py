@@ -133,15 +133,11 @@ n_cells = len(source_lib) - 1
 print("Number of cells in source library: " + str(n_cells))
 
 
-
-print(check_selection(selection, source_lib, design_path))
-
-"""
 selection = np.ones(n_cells)
-skip_list = np.zeros(n_cells)
+#skip_list = np.zeros(n_cells)
 
 while(True):
-    new_selection, new_delay, new_area = find_best_option_faster(selection, source_lib, design_path, skip_list)
+    new_selection, new_delay, new_area = find_best_option(selection, source_lib, design_path)
     if np.array_equal(selection, new_selection):
         break
     selection = new_selection
@@ -151,11 +147,3 @@ print("Best selection found: " + str(selection))
 for x in range(5):
     delay, area = check_selection(selection, source_lib, design_path)
     print("Delay: " + str(delay) + "    Area: " + str(area))
-"""
-
-
-
-
-
-
-
