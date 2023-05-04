@@ -2,16 +2,17 @@ import sys
 import random
 import os
 import numpy as np
-if len(sys.argv) !=4:
-    assert(0), 'usage wrong: please use: python thisfile num_of_gates(int) design.file genlib.file'
+if len(sys.argv) !=5:
+    assert(0), 'usage wrong: please use: python thisfile num_of_gates(int) number_of_tests(int) design.file genlib.file'
 # genlib 
 genlib_origin = sys.argv[-1]
 # design file
 design = sys.argv[-2]
 # number of design batch
-batch_size = 2 
+batch_size = 2
+num_tests = int(sys.argv[-3])
 # sample gates
-sample_gate = int(sys.argv[-3])
+sample_gate = int(sys.argv[-4])
 
 
 
@@ -85,11 +86,11 @@ def sample_test(sample_iter=50, sample_gate=50):
     return np.nanmin(delay_hist), np.nanmin(area_hist), delay_hist, area_hist
 
 x = 10
-while x <= 150:
+while x <= sample_gate:
 	delay_hist = []
 	area_hist = []
-	min_d, min_a, d_hist, a_hist = sample_test(100, x)
+	min_d, min_a, d_hist, a_hist = sample_test(num_tests, x)
 	print(x, min_d, min_a, np.nanmean(d_hist), np.nanmean(a_hist), len(d_hist), len(a_hist))
 	x += 10
-	print(delay_hist)
-	print(area_hist)
+	#print(delay_hist)
+	#print(area_hist)
