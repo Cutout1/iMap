@@ -15,6 +15,21 @@ import torch.nn.functional as F
 
 env = MapEnv(lib_path="7nm.genlib", design_path="ode.abc.blif", goal="min_delay")
 
+# BATCH_SIZE is the number of transitions sampled from the replay buffer
+# GAMMA is the discount factor as mentioned in the previous section
+# EPS_START is the starting value of epsilon
+# EPS_END is the final value of epsilon
+# EPS_DECAY controls the rate of exponential decay of epsilon, higher means a slower decay
+# TAU is the update rate of the target network
+# LR is the learning rate of the ``AdamW`` optimizer
+BATCH_SIZE = 4
+GAMMA = 0.9
+EPS_START = 0.9
+EPS_END = 0.05
+EPS_DECAY = 10000
+TAU = 0.005
+LR = 1e-1
+
 """
 print(env.action_space.sample())
 print(env.observation_space.sample())
@@ -70,21 +85,6 @@ class DQN(nn.Module):
         x = F.relu(self.layer1(x))
         x = F.relu(self.layer2(x))
         return self.layer3(x)
-
-# BATCH_SIZE is the number of transitions sampled from the replay buffer
-# GAMMA is the discount factor as mentioned in the previous section
-# EPS_START is the starting value of epsilon
-# EPS_END is the final value of epsilon
-# EPS_DECAY controls the rate of exponential decay of epsilon, higher means a slower decay
-# TAU is the update rate of the target network
-# LR is the learning rate of the ``AdamW`` optimizer
-BATCH_SIZE = 4
-GAMMA = 0.9
-EPS_START = 0.9
-EPS_END = 0.05
-EPS_DECAY = 10000
-TAU = 0.005
-LR = 1e-1
 
 # Get number of actions from gym action space
 n_actions = env.action_space.n
